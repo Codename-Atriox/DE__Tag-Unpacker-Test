@@ -17,7 +17,7 @@ namespace Infinite_module_test
     public partial class MainWindow : Window
     {
         
-
+        // this is the previous test of this tool, to unpack the tags to xml 
         public FileStream module_reader;
         public T read_and_convert_to<T>(int read_length)
         {
