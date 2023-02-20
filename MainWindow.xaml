@@ -1,0 +1,26 @@
+﻿<Window x:Class="Infinite_module_test.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Infinite_module_test"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel>
+            <TextBlock x:Name="select_ind" Text="Selected_Index: -1"/>
+            <Button IsEnabled="False" x:Name="raw" Content="Copy raw data" Click="raw_Click" />
+            <Button IsEnabled="False" x:Name="data" Content="Copy Tag Data" Click="data_Click"/>
+            <Button IsEnabled="False" x:Name="resource" Content="Copy Tag Resource" Click="resource_Click"/>
+            <Button IsEnabled="False" x:Name="other_source" Content="Copy other Tag Resource" Click="other_source_Click"/>
+            <Button IsEnabled="False" x:Name="unmarked" Content="Copy Unmarked data" Click="unmarked_Click"/>
+        </StackPanel>
+        <ListBox x:Name="tag_box" Grid.Column="1" SelectionChanged="tag_box_SelectionChanged">
+            
+        </ListBox>
+    </Grid>
+</Window>
