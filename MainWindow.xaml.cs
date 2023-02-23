@@ -98,9 +98,9 @@ namespace Infinite_module_test
                 for (int i = 0; i < module.files.Length; i++)
                 {
                     // read the flags to determine how to process this file
-                    bool using_compression       = (module.files[i].Flags & 0b00000001) > 0; // pretty sure this is true if reading_seperate_blocks is also true, confirmation needed
+                    bool using_compression = (module.files[i].Flags & 0b00000001) > 0; // pretty sure this is true if reading_seperate_blocks is also true, confirmation needed
                     bool reading_separate_blocks = (module.files[i].Flags & 0b00000010) > 0;
-                    bool reading_raw_file        = (module.files[i].Flags & 0b00000100) > 0;
+                    bool reading_raw_file = (module.files[i].Flags & 0b00000100) > 0;
 
                     byte[] decompressed_data = new byte[module.files[i].TotalUncompressedSize];
                     long data_Address = aligned_address + module.files[i].DataOffset;
@@ -144,7 +144,26 @@ namespace Infinite_module_test
                             module_reader.Read(decompressed_data, 0, module.files[i].TotalUncompressedSize);
                         }
                     }
+                    // umm thats enough for now, this tool does not need to process the tags anymore
 
+                    // ok so now we need to unpack this tag, we'll basically just plop all of those decompressed bytes into a single file with the handy write all bytes function
+                    // so first we need to know what file/folder to write to, so lets fetch the name
+                    // NOTE: in later module versions, it does not provdei the file name, so we must either refere to a list of  names, or we must place the tag into a temp folder
+                    // i guess we could aos attempt tp calculate which folder this tag belongs in, as we could see who references it and stikc it in the folder of the guy who references
+                    // we could alos just group unknowns tags by tag group, so we'd ha ve the unknown folder, and then we'd have group folders inside that unknow folddedr that we'd then assort them into
+                    // but realistically, we'll wqorry about that when we get around to it, or rather when 343 gets around to it
+
+                    
+                    string file_path = "D:\\T\\" + getstring_of_tag(i);
+                    string test_extension = Path.GetExtension(file_path);
+                    if (test_extension.Contains(":"))
+                        file_path = Path.ChangeExtension(file_path, test_extension.Replace(":", "-"));
+                    
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(file_path));
+                    File.WriteAllBytes(file_path, decompressed_data);
+                    
+                    /*
                     // now we process the data, either into a tag structure, or a raw file structure
                     if (reading_raw_file) // if reading the manifest thingo
                     {
@@ -243,14 +262,15 @@ namespace Infinite_module_test
                         //take_that_mfing_array_and_stick_it_in_my_clipboard_RIGHT_NOW(module.file_contents[i].tag_data);
 
                     }
+                    */
                 }
                 // ok thats all, the tags have been read
                 // this is so we could preview the datas 
-                tag_header[] debug_tag_headers = new tag_header[module.file_contents.Length];
-                for (int i = 0; i < debug_tag_headers.Length; i++)
-                {
-                    debug_tag_headers[i] = module.file_contents[i].header;
-                }
+                //tag_header[] debug_tag_headers = new tag_header[module.file_contents.Length];
+                //for (int i = 0; i < debug_tag_headers.Length; i++)
+                //{
+                //    debug_tag_headers[i] = module.file_contents[i].header;
+                //}
 
                 // DEBUG STUFF
 

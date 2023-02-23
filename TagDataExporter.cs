@@ -430,10 +430,10 @@ namespace Infinite_module_test{
                         TagWriter.WriteAttributeString("v", KindaSafe_SuperCast<int>(struct_bytes, param_offset + 8).ToString("X4"));
                         break;
                     case "_42": // _field_data - 24byte
-
+                        pass_array_into_clipboard(struct_bytes.Skip((int)param_offset).Take(24).ToArray());
                         break;
                     case "_43": // _field_resource - 16byte
-
+                        pass_array_into_clipboard(struct_bytes.Skip((int)param_offset).Take(16).ToArray());
                         break;
                     //case "_44": // _field_data_path
                     //
@@ -443,6 +443,7 @@ namespace Infinite_module_test{
                     //    break;
                     default:
                         // here we should breakpoint so we can figure out the lengths of unmapped types
+                        // type 30 is used??
                         break;
                 }
 
